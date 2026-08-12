@@ -1,0 +1,17 @@
+[Unit]
+Description=Casa Domotica - Dashboard y UART ESP32
+After=network-online.target pyhome-hotspot.service
+Wants=network-online.target pyhome-hotspot.service
+
+[Service]
+Type=simple
+User=__USER__
+WorkingDirectory=__DIR__
+ExecStart=/usr/bin/python3 __DIR__/app.py
+Restart=always
+RestartSec=3
+Environment=PYTHONUNBUFFERED=1
+Environment=GPIOZERO_PIN_FACTORY=lgpio
+
+[Install]
+WantedBy=multi-user.target

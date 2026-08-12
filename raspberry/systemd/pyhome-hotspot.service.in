@@ -1,0 +1,13 @@
+[Unit]
+Description=Casa Domotica - Access Point WiFi
+After=NetworkManager.service
+Requires=NetworkManager.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=__DIR__
+ExecStart=__DIR__/setup_hotspot.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

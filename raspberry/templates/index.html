@@ -1,0 +1,308 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Casa Domótica</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="app-shell">
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div>
+        <p class="eyebrow">CASA DOMÓTICA</p>
+        <h1>Panel de Monitoreo</h1>
+      </div>
+    </div>
+
+    <div class="system-state">
+      <span id="serialDot" class="status-dot"></span>
+      <span id="serialText">UART desconectado</span>
+    </div>
+  </header>
+
+  <main class="dashboard">
+
+    <section class="camera-column">
+      <h2>Videovigilancia</h2>
+
+      <article class="camera-card">
+        <div class="camera-top">
+          <span class="live">● LIVE</span>
+          <span id="cameraTime1">--:--:--</span>
+        </div>
+
+        <img src="/video/0" alt="Cámara 1">
+
+        <div class="camera-bottom">
+          <strong>Cámara 1</strong>
+          <span id="cameraStatus0">Esperando</span>
+        </div>
+      </article>
+
+      <article class="camera-card">
+        <div class="camera-top">
+          <span class="live">● LIVE</span>
+          <span id="cameraTime2">--:--:--</span>
+        </div>
+
+        <img src="/video/1" alt="Cámara 2">
+
+        <div class="camera-bottom">
+          <strong>Cámara 2</strong>
+          <span id="cameraStatus1">Esperando</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="data-column">
+      <h2>Estado del Sistema</h2>
+
+      <div class="card-grid">
+
+        <article class="panel wide">
+          <div class="panel-head">
+            <h3>Nivel de agua</h3>
+            <span>💧</span>
+          </div>
+
+          <div class="big-metric">
+            <span id="waterLevel">--</span>%
+          </div>
+
+          <div class="progress">
+            <div id="waterBar" class="progress-fill"></div>
+          </div>
+
+          <small>
+            Calculado con el ultrasónico 2. Ajusta vacío/lleno en config.json.
+          </small>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Presencia</h3>
+            <span>📡</span>
+          </div>
+
+          <div id="presenceState" class="status-value">
+            Sin datos
+          </div>
+
+          <small id="presenceTime">
+            Sin detección
+          </small>
+
+          <div class="minor">
+            Distancia US1:
+            <strong><span id="us1Distance">--</span> cm</strong>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Cerradura</h3>
+            <span>🔒</span>
+          </div>
+
+          <div id="lockState" class="status-value">
+            Cerrada
+          </div>
+
+          <small>
+            Origen:
+            <span id="lockSource">Sin datos</span>
+          </small>
+
+          <small id="lockTime">
+            Sin actualización
+          </small>
+
+          <div class="button-row">
+            <button class="btn success" data-lock="open">
+              Abrir
+            </button>
+
+            <button class="btn danger" data-lock="closed">
+              Cerrar
+            </button>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Contraseña local</h3>
+            <span>⌨</span>
+          </div>
+
+          <div id="passwordState" class="status-value">
+            Sin intentos
+          </div>
+
+          <small id="passwordTime">
+            Esperando teclado 4x4
+          </small>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Calidad del aire</h3>
+            <span>🌬</span>
+          </div>
+
+          <div class="air-grid">
+            <div>
+              <small>AQI</small>
+              <strong id="aqi">--</strong>
+            </div>
+
+            <div>
+              <small>TVOC</small>
+              <strong>
+                <span id="tvoc">--</span> ppb
+              </strong>
+            </div>
+
+            <div>
+              <small>eCO₂</small>
+              <strong>
+                <span id="eco2">--</span> ppm
+              </strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <h3>Ultrasónicos</h3>
+            <span>📏</span>
+          </div>
+
+          <div class="two-values">
+            <div>
+              <small>US1</small>
+              <strong>
+                <span id="us1Card">--</span> cm
+              </strong>
+            </div>
+
+            <div>
+              <small>US2</small>
+              <strong>
+                <span id="us2Card">--</span> cm
+              </strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel wide">
+          <div class="panel-head">
+            <h3>Consumo de agua</h3>
+            <span>🚰</span>
+          </div>
+
+          <div class="flow-grid">
+            <div class="flow-card">
+              <small>Caudal baño 1</small>
+              <strong>
+                <span id="flow1">0.00</span> L/min
+              </strong>
+
+              <span>
+                Total:
+                <b><span id="lit1">0.000</span> L</b>
+              </span>
+
+              <button
+                class="mini-btn"
+                data-reset-flow="1">
+                Reiniciar total
+              </button>
+            </div>
+
+            <div class="flow-card">
+              <small>Caudal baño 2</small>
+              <strong>
+                <span id="flow2">0.00</span> L/min
+              </strong>
+
+              <span>
+                Total:
+                <b><span id="lit2">0.000</span> L</b>
+              </span>
+
+              <button
+                class="mini-btn"
+                data-reset-flow="2">
+                Reiniciar total
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel wide">
+          <div class="panel-head">
+            <h3>Actuadores</h3>
+            <span>⚙</span>
+          </div>
+
+          <div id="relayGrid" class="relay-grid">
+            {% for number in range(1,9) %}
+            <div class="relay-item">
+              <div>
+                <small>
+                  R{{ number }}
+                </small>
+
+                <strong>
+                  {{ relay_names[number|string] }}
+                </strong>
+
+                <span
+                  id="relayState{{ number }}"
+                  class="relay-state">
+                  OFF
+                </span>
+              </div>
+
+              <label class="switch">
+                <input
+                  type="checkbox"
+                  id="relayToggle{{ number }}"
+                  data-relay="{{ number }}">
+
+                <span class="slider"></span>
+              </label>
+            </div>
+            {% endfor %}
+          </div>
+
+          <div id="commandFeedback" class="feedback"></div>
+        </article>
+
+        <article class="panel wide placeholder-panel">
+          <div class="panel-head">
+            <h3>Variables pendientes</h3>
+            <span>＋</span>
+          </div>
+
+          <p>
+            Presión de agua y temperatura todavía no tienen un sensor
+            definido en el código actual de la ESP32. El frontend queda
+            preparado para agregarlos cuando definas esos sensores.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

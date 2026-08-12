@@ -1,0 +1,62 @@
+{
+  "web": {
+    "host": "0.0.0.0",
+    "port": 8080
+  },
+  "hotspot": {
+    "connection_name": "CasaDomoticaAP",
+    "ssid": "Casa-Domotica",
+    "password": "CasaDomotica2026",
+    "interface": "wlan0",
+    "address": "10.42.0.1/24"
+  },
+  "serial": {
+    "port": "/dev/serial0",
+    "baudrate": 115200,
+    "reconnect_seconds": 2
+  },
+  "relays": {
+    "active_low": true,
+    "pins_bcm": {
+      "1": 5,
+      "2": 6,
+      "3": 12,
+      "4": 13,
+      "5": 16,
+      "6": 20,
+      "7": 21,
+      "8": 26
+    },
+    "names": {
+      "1": "Ventilador Recámara 1",
+      "2": "Ventilador Recámara 2",
+      "3": "Ventilador Recámara 3",
+      "4": "Extractor 1",
+      "5": "Extractor 2",
+      "6": "Bomba 1",
+      "7": "Bomba 2",
+      "8": "Relevador reserva"
+    }
+  },
+  "presence": {
+    "ultrasonic": "US1",
+    "detect_cm": 70.0,
+    "clear_cm": 80.0
+  },
+  "water_level": {
+    "ultrasonic": "US2",
+    "full_distance_cm": 10.0,
+    "empty_distance_cm": 100.0
+  },
+  "cameras": {
+    "devices": [
+      0,
+      2
+    ],
+    "width": 640,
+    "height": 360,
+    "fps": 10,
+    "jpeg_quality": 75
+  },
+  "temperature_history_points": 180
+}
